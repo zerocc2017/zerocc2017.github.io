@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>iOS 中证书和签名机制 | zerocc2014</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">iOS 中证书和签名机制</h1><a id="logo" href="/.">zerocc2014</a><p class="description">桃李春风一杯酒，江湖夜雨十年灯</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/reads/"><i class="fa fa-folder"> 阅读</i></a><a href="/codes/"><i class="fa fa-star"> 干货</i></a><a href="/tags/"><i class="fa fa-tags"> 标签</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">iOS 中证书和签名机制</h1><div class="post-meta">2017年11月23日<span> | </span><span class="category"><a href="/categories/iOS/">iOS</a></span></div><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">加密解密算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E7%A7%8D%E7%B1%BB"><span class="toc-number">1.1.</span> <span class="toc-text">加密算法种类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text">非对称加密算法详解</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D"><span class="toc-number">2.</span> <span class="toc-text">数字签名</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%90%8D%E4%BD%9C%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">签名作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">签名原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%90%8D%E6%AD%A5%E9%AA%A4"><span class="toc-number">2.3.</span> <span class="toc-text">签名步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6"><span class="toc-number">3.</span> <span class="toc-text">数字证书</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">3.1.</span> <span class="toc-text">数字证书是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%81%E4%B9%A6%E7%AD%BE%E5%8F%91%E6%9C%BA%E6%9E%84"><span class="toc-number">3.2.</span> <span class="toc-text">证书签发机构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%81%E4%B9%A6%E4%BF%A1%E4%BB%BB%E9%93%BE"><span class="toc-number">3.3.</span> <span class="toc-text">证书信任链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B9%E8%AF%81%E4%B9%A6"><span class="toc-number">3.4.</span> <span class="toc-text">根证书</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS-%E4%B8%AD%E8%AF%81%E4%B9%A6%E5%92%8C%E7%AD%BE%E5%90%8D"><span class="toc-number">4.</span> <span class="toc-text">iOS 中证书和签名</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">5.</span> <span class="toc-text">参考链接</span></a></li></ol></div></div><div class="post-content"><p>最近处理挺多 ipa 包重签名以及发布审核出错等签名相关的问题，实践出真知，主要技巧重签名脚本、解包 codesign 命令核查签名是否正确等。</p>
+<p>证书签名有什么用呢？这就是为什么苹果除越狱外就一个 App Store 应用渠道，而安卓大家懂的，做游戏发布各个渠道搞死，签名机制总的来说就是苹果应用生态圈的控制方法吧。</p>
+<a id="more"></a>
+
+<h1 id="加密解密算法"><a href="#加密解密算法" class="headerlink" title="加密解密算法"></a>加密解密算法</h1><hr>
+<h2 id="加密算法种类"><a href="#加密算法种类" class="headerlink" title="加密算法种类"></a>加密算法种类</h2><ol>
+<li><p>对称加密算法：加密解密都使用相同的密钥，速度快，适合大数据加密，方法有 DES、3DES、AES等。</p>
+</li>
+<li><p>非对称加密算法：非对称加密算法需要两个密钥一个公开密钥(publickey)和一个私有密钥(privatekey)，公钥和私钥是一对，它是可逆的加密算法，若用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；若用私有密钥对数据进行加密，只有用对应的公开密钥才能解密。因为加密和解密使用的是两个不同的密钥，所以这种算法叫做非对称加密算法 ( 公 / 私钥可由专门软件生成 )。适用对小数据加密，方法有 RSA。</p>
+</li>
+<li><p>散列算法：加密后不能解密是不可逆的，算法公开，对相同的数据加密得到的结果是一样的；对不同的数据加密，得到的结果是定长的，不能返算；又叫哈希函数、信息指纹，信息摘要 - 用来做数据识别。 方法有 MD5、SHA1、SHA256、SHA512、HMAC。</p>
+</li>
+</ol>
+<h2 id="非对称加密算法详解"><a href="#非对称加密算法详解" class="headerlink" title="非对称加密算法详解"></a>非对称加密算法详解</h2><p>数字签名中就用到了非对称加密(公钥加密)，因而多说下这个公钥加密。</p>
+<p><strong>公私钥重要特性</strong></p>
+<ul>
+<li><p>对于一个私钥，有且只有一个与之对应的公钥。生产者负责生成私钥和公钥，并保存私钥，公开公钥。</p>
+</li>
+<li><p>公钥是公开的，但不可能通过公钥反推出私钥，或者说极难反推，只能穷举，所以只要密钥长度足够长，要通过穷举出私钥几乎是不可能。</p>
+</li>
+<li><p>通过私钥加密的密文只能通过公钥解密，公钥加密的密文只能通过私钥解密。</p>
+</li>
+</ul>
+<p><strong>公钥私钥的生成</strong></p>
+<ul>
+<li><p>公钥是由签名机构签完颁发的，放在网站的根目录上，可以分发。</p>
+</li>
+<li><p>私钥一般保存在中心服务器。</p>
+</li>
+</ul>
+<p><strong>非对称加密典型用法</strong></p>
+<ul>
+<li><p>对信息保密，防止中间人攻击：将明文通过接收人的公钥加密，传输给接收人，因为只有接收人拥有对应的私钥，别人不可能拥有或者不可能通过公钥推算出私钥，所以传输过程中无法被中间人截获。只有拥有私钥的接收人才能阅读。此用法通常用于交换对称密钥。</p>
+</li>
+<li><p>身份验证和防止篡改：权限狗用自己的私钥加密一段授权明文，并将授权明文和加密后的密文，以及公钥一并发送出来，接收方只需要通过公钥将密文解密后与授权明文对比是否一致，就可以判断明文在中途是否被篡改过。此方法用于数字签名。</p>
+</li>
+</ul>
+<p><strong>RSA 算法原理</strong></p>
+<ol>
+<li><p>找出两个 “很大” 的质数：P &amp; Q，N = P * Q，M = (P-1) * (Q-1)</p>
+</li>
+<li><p>找出整数 E ，E 与 M 互质，即除了之外，没有公约数。</p>
+</li>
+<li><p>找出整数 D，使得 ED 除以 M 余1，即 (E * D) % M = 1 。</p>
+</li>
+<li><p>经过上述准备工作之后，可以得到：E 是公钥，负责加密 D 是私钥，负责解密 N 负责公钥和私钥之间的联系</p>
+</li>
+<li><p>加密算法，假定对 X 进行加密 (X ^ E) % N = Y</p>
+</li>
+<li><p>解密算法，根据费尔马小定义，可以使用以下公式完成解密 (Y ^ D) % N = X</p>
+</li>
+</ol>
+<h1 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h1><hr>
+<h2 id="签名作用"><a href="#签名作用" class="headerlink" title="签名作用"></a>签名作用</h2><p>数字签名通过签名算法将消息签名得到密文，签名算法应该具有的特性：</p>
+<ul>
+<li>具备完整性，确认消息在传输过程中没有丢失，没有被篡改。</li>
+<li>具备认证合法性，确认消息的发送者是发布公钥的发布者。</li>
+<li>具备不可否认性，确认发布者的确发布过该消息。</li>
+</ul>
+<h2 id="签名原理"><a href="#签名原理" class="headerlink" title="签名原理"></a>签名原理</h2><p>数字签名运用公钥加密(非对称加密算法)反用和散列算法。这里的反用是指签名者将讯息用私钥加密，然后公布公钥，验证者使用公钥将加密讯息解密，这种加密方式着重的是合法性或者说权限性，今天所讲的苹果签名原理就是这种；公钥加密的正用是指公钥加密私钥解密，如 HTTPS 私钥放在服务器进行解密验证，这种加密着重的是文件的完整性。</p>
+<h2 id="签名步骤"><a href="#签名步骤" class="headerlink" title="签名步骤"></a>签名步骤</h2><p>假设一个场景，A 是签名者，要签名的消息为 message，利用公钥加密算法反用加密。验证方为 B</p>
+<ol>
+<li><p>将消息 message 通过散列算法的到散列值，定为这个散列值为签名对象</p>
+</li>
+<li><p>A 生成其公私钥，公布该公钥。</p>
+</li>
+<li><p>利用公钥加密算法，将签名对象用私钥加密后密文、原消息 message 和对应的公钥一起发布。</p>
+</li>
+<li><p>B 先查看公钥是否是 A 的，再用该公钥对密文进行解密得到散列值</p>
+</li>
+<li><p>将消息 message 用同样的散列算法得到散列值，再将两个散列值进行比对。</p>
+</li>
+</ol>
+<p>苹果签名示意图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/5433182-2f73e771966d8f19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="22.ng"></p>
+<h1 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h1><hr>
+<h2 id="数字证书是什么"><a href="#数字证书是什么" class="headerlink" title="数字证书是什么"></a>数字证书是什么</h2><p>数字证书就是通过数字签名实现的数字化的证书，又称公钥证书、公开密钥证书、电子证书、安全证书。我们可以把比对着英语四级证、营业许可证等一样理解。其是一个经证书授权中心数字签名的包含公开密钥拥有者信息以及公开密钥的文件。</p>
+<p>数字证书的格式普遍采用的是 X.509V3 国际标准，一个标准的 X.509 数字证书包含以下一些内容：</p>
+<ul>
+<li>证书的版本信息；</li>
+<li>证书的序列号，每个证书都有一个唯一的证书序列号；</li>
+<li>证书所使用的签名算法；</li>
+<li>证书的发行机构名称，命名规则一般采用X.500格式；</li>
+<li>证书的有效期，通用的证书一般采用UTC时间格式，它的计时范围为1950-2049；</li>
+<li>证书所有人的名称，命名规则一般采用X.500格式；</li>
+<li>证书所有人的公开密钥；</li>
+<li>证书发行者对证书的签名。</li>
+</ul>
+<h2 id="证书签发机构"><a href="#证书签发机构" class="headerlink" title="证书签发机构"></a>证书签发机构</h2><p>数字证书的签发机构</p>
+<p>数字证书的签发机构也有若干，并有不同的用处。比如苹果公司就可以签发跟苹果公司有关的证书，而跟 web 访问有关的证书则是由几家全世界公认的机构进行签发。这些签发机构称为 CA（Certificate Authority）。</p>
+<p>对于被签发人，通常都是企业或开发者。对于需要搭建基于SSL的网站，那么需要从几家国际公认的CA去申请证书；对如需要开发iOS的应用程序，需要从苹果公司获得相关的证书。这些申请通常是企业或者开发者个人提交给CA的。当然申请所需要的材料、资质和费用都各不相同，是由这些CA制定的，比如苹果要求$99或者$299的费用。</p>
+<p>web应用相关的SSL证书的验证方通常是浏览器；iOS各种证书的验证方是iOS设备。我们之所以必须从 CA 处申请证书，就是因为 CA 已经将整个验证过程规定好了。</p>
+<h2 id="证书信任链"><a href="#证书信任链" class="headerlink" title="证书信任链"></a>证书信任链</h2><p>数字证书可能还包括证书链信息。举个例子：如果你要申请休假1周，需要你的上司审批，你的上司需要他的上司同意，最终需要大老板同意，那么这一层层的授权，形成了一个授权链，大老板是授权链的根(root)，中间这些环节分别是被更接近root的人授权的。</p>
+<p>我们从苹果MC（Member Center）中获得的证书实际也是一个包含有证书链的证书，其中的根是苹果的CA。我们获得的证书实际上是在告诉iOS设备：我们的证书是被苹果CA签过名的合法的证书。而iOS设备在执行app前，首先要先验证CA的签名是否合法，然后再通过证书中我们的公钥验证程序是否的确是我们发布的，且中途没有对程序进行过篡改。</p>
+<h2 id="根证书"><a href="#根证书" class="headerlink" title="根证书"></a>根证书</h2><h1 id="iOS-中证书和签名"><a href="#iOS-中证书和签名" class="headerlink" title="iOS 中证书和签名"></a>iOS 中证书和签名</h1><hr>
+<p><img src="http://upload-images.jianshu.io/upload_images/5433182-4ab08b2e408cb21f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="23.png"></p>
+<ol>
+<li>Mac 机器访问钥匙串从证书颁发机构请求证书得到 CertificateSigningRequest.certSigningRequest </li>
+<li>w</li>
+<li></li>
+</ol>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a href="%5Bhttp://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html%5D">阮一峰RSA算法原理</a></p>
+<p><a href="%5Bhttps://developer.apple.com/support/code-signing/%5D">苹果开发指北链接</a></p>
+<p><a href="%5Bhttps://www.objc.io/issues/17-security/inside-code-signing/%5D">objc.io-codesigning</a></p>
+<p><a href="%5Bhttps://developer.apple.com/library/content/documentation/Security/Conceptual/CodeSigningGuide/Introduction/Introduction.html%5D">苹果 Code Signing Guide 文档链接</a></p>
+</div><div class="post-copyright"><script type="text/javascript" src="/js/copyright.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copyright.css"><p><span>本文标题：</span>iOS 中证书和签名机制</p><p><span>文章作者：</span>zerocc</p><p><span>发布时间：</span>2017年11月23日</p><p><span>原始链接：</span><a href="/20171123.html">http://www.zerocc.com.cn/20171123.html</a><span class="copy-path"><i class="fa fa-clipboard" data-clipboard-text="http://www.zerocc.com.cn/20171123.html"></i></span></p><p><span>版权声明：</span>本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！</p></div><br><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a class="article-share-link" data-url="http://www.zerocc.com.cn/20171123.html" data-id="ckfp124rb000sr1xb5yjjdcuk" data-qrcode="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3aQZLCMAwEwP3/p9kHpPCOLFubQ/tEQSBNDlOS7J+feH0e6/np88rnp9++dXjh4uK2uZ/lWiPWrG/vrH9t/WhwcXEnueug6V+TxF8Udri4uC/mVguUY2UQLi7ui7lJb5Jfg4uL+05u0vxUiXl4XenVcHFxG9y9AuXs6yvzXVxc3C3up7hOjVk3746LizvCzQOlurmyLlDy8gUXF/d/uXtRlTQ5Z4964OLiznCThqc/7qweuSijcXFxL3DXQdYfjFaD8o/HgYuLe5nb2UBNRh55EZM8Mlxc3HnuugTp7GvkR7sKiYuLi3uBu9cbJfTOd78GIi4u7gg3KTiqG6V5CG6WPri4uIPc5OeqI9HO2apCr4aLizvO7URVp/QpT3ZxcXFHuPk2anU7Ni99CkGGi4t7gVuIksaY48DxDlxc3EFudZO10zLtHQjDxcWd4fa3SNflSz7yiP4qLi7uCLcaLvm2yoFTIfEQFhcX9wY3D53qLTtBtlno4OLiHuXmlLzo6TRahfkuLi7u67n52DQpmK4HGS4u7iFuMhapDlsLI1RcXNxBbvnoZDw0yZucKNRwcXFHuNUoyW9ZaGnaV+Li4h7i/gJEpjPSpNQSCgAAAABJRU5ErkJggg==">分享</a><div class="tags"><a href="/tags/iOS/"><i class="fa fa-tag"></i>iOS</a><a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/"><i class="fa fa-tag"></i>密码学</a></div><div class="post-nav"><a class="pre" href="/20160510.html">你是否长大了</a><a class="next" href="/index.html">iOS - RunLoop 运行循环步骤源码解析</a></div><div id="lv-container" data-id="city" data-uid="MTAyMC8zMTcyMy84Mjg3"><script>(function(d, s) {
+   var j, e = d.getElementsByTagName(s)[0];
+   if (typeof LivereTower === 'function') { return; }
+   j = d.createElement(s);
+   j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+   j.async = true;
+   e.parentNode.insertBefore(j, e);
+})(document, 'script');
+</script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://www.zerocc.com.cn"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%B6%E5%85%89%E6%B2%99%E6%BC%8F/">时光沙漏</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/index.html">iOS - RunLoop 具体运用</a></li><li class="post-list-item"><a class="post-list-link" href="/20151003.html">iOS 开发之 Socket 编程</a></li><li class="post-list-item"><a class="post-list-link" href="/20180101.html">归来仍是少年</a></li><li class="post-list-item"><a class="post-list-link" href="/20161023.html">只要最后是你就好</a></li><li class="post-list-item"><a class="post-list-link" href="/20190602.html">后来的我们</a></li><li class="post-list-item"><a class="post-list-link" href="/20181017.html">凌晨三点</a></li><li class="post-list-item"><a class="post-list-link" href="/20160405.html">念乡思你</a></li><li class="post-list-item"><a class="post-list-link" href="/20170420.html">漂洋过海来看你</a></li><li class="post-list-item"><a class="post-list-link" href="/index.html">iOS - 苹果内购</a></li><li class="post-list-item"><a class="post-list-link" href="/20180312.html">希望我们冷漠且礼貌的相处</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2020 <a href="/." rel="nofollow">zerocc2014.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+</script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
