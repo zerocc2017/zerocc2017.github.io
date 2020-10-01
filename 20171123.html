@@ -3,51 +3,34 @@
 
 <h1 id="加密解密算法"><a href="#加密解密算法" class="headerlink" title="加密解密算法"></a>加密解密算法</h1><p>加密算法种类:</p>
 <ol>
-<li><p>对称加密算法：加密解密都使用相同的密钥，速度快，适合大数据加密，方法有 DES、3DES、AES等。</p>
-</li>
-<li><p>非对称加密算法：非对称加密算法需要两个密钥一个公开密钥(publickey)和一个私有密钥(privatekey)，公钥和私钥是一对，它是可逆的加密算法，若用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；若用私有密钥对数据进行加密，只有用对应的公开密钥才能解密。因为加密和解密使用的是两个不同的密钥，所以这种算法叫做非对称加密算法 ( 公 / 私钥可由专门软件生成 )。适用对小数据加密，方法有 RSA。</p>
-</li>
-<li><p>散列算法：加密后不能解密是不可逆的，算法公开，对相同的数据加密得到的结果是一样的；对不同的数据加密，得到的结果是定长的，不能返算；又叫哈希函数、信息指纹，信息摘要 - 用来做数据识别。 方法有 MD5、SHA1、SHA256、SHA512、HMAC。</p>
-</li>
+<li>对称加密算法：加密解密都使用相同的密钥，速度快，适合大数据加密，方法有 DES、3DES、AES等。</li>
+<li>非对称加密算法：非对称加密算法需要两个密钥一个公开密钥(publickey)和一个私有密钥(privatekey)，公钥和私钥是一对，它是可逆的加密算法，若用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；若用私有密钥对数据进行加密，只有用对应的公开密钥才能解密。因为加密和解密使用的是两个不同的密钥，所以这种算法叫做非对称加密算法 ( 公 / 私钥可由专门软件生成 )。适用对小数据加密，方法有 RSA。</li>
+<li>散列算法：加密后不能解密是不可逆的，算法公开，对相同的数据加密得到的结果是一样的；对不同的数据加密，得到的结果是定长的，不能返算；又叫哈希函数、信息指纹，信息摘要 - 用来做数据识别。 方法有 MD5、SHA1、SHA256、SHA512、HMAC。<h2 id="非对称加密算法详解"><a href="#非对称加密算法详解" class="headerlink" title="非对称加密算法详解"></a>非对称加密算法详解</h2>数字签名中就用到了非对称加密(公钥加密)，因而多说下这个公钥加密。</li>
 </ol>
-<h2 id="非对称加密算法详解"><a href="#非对称加密算法详解" class="headerlink" title="非对称加密算法详解"></a>非对称加密算法详解</h2><p>数字签名中就用到了非对称加密(公钥加密)，因而多说下这个公钥加密。</p>
 <p><strong>公私钥重要特性</strong></p>
 <ul>
-<li><p>对于一个私钥，有且只有一个与之对应的公钥。生产者负责生成私钥和公钥，并保存私钥，公开公钥。</p>
-</li>
-<li><p>公钥是公开的，但不可能通过公钥反推出私钥，或者说极难反推，只能穷举，所以只要密钥长度足够长，要通过穷举出私钥几乎是不可能。</p>
-</li>
-<li><p>通过私钥加密的密文只能通过公钥解密，公钥加密的密文只能通过私钥解密。</p>
-</li>
+<li>对于一个私钥，有且只有一个与之对应的公钥。生产者负责生成私钥和公钥，并保存私钥，公开公钥。</li>
+<li>公钥是公开的，但不可能通过公钥反推出私钥，或者说极难反推，只能穷举，所以只要密钥长度足够长，要通过穷举出私钥几乎是不可能。</li>
+<li>通过私钥加密的密文只能通过公钥解密，公钥加密的密文只能通过私钥解密。</li>
 </ul>
 <p><strong>公钥私钥的生成</strong></p>
 <ul>
-<li><p>公钥是由签名机构签完颁发的，放在网站的根目录上，可以分发。</p>
-</li>
-<li><p>私钥一般保存在中心服务器。</p>
-</li>
+<li>公钥是由签名机构签完颁发的，放在网站的根目录上，可以分发。</li>
+<li>私钥一般保存在中心服务器。</li>
 </ul>
 <p><strong>非对称加密典型用法</strong></p>
 <ul>
-<li><p>对信息保密，防止中间人攻击：将明文通过接收人的公钥加密，传输给接收人，因为只有接收人拥有对应的私钥，别人不可能拥有或者不可能通过公钥推算出私钥，所以传输过程中无法被中间人截获。只有拥有私钥的接收人才能阅读。此用法通常用于交换对称密钥。</p>
-</li>
-<li><p>身份验证和防止篡改：权限狗用自己的私钥加密一段授权明文，并将授权明文和加密后的密文，以及公钥一并发送出来，接收方只需要通过公钥将密文解密后与授权明文对比是否一致，就可以判断明文在中途是否被篡改过。此方法用于数字签名。</p>
-</li>
+<li>对信息保密，防止中间人攻击：将明文通过接收人的公钥加密，传输给接收人，因为只有接收人拥有对应的私钥，别人不可能拥有或者不可能通过公钥推算出私钥，所以传输过程中无法被中间人截获。只有拥有私钥的接收人才能阅读。此用法通常用于交换对称密钥。</li>
+<li>身份验证和防止篡改：权限狗用自己的私钥加密一段授权明文，并将授权明文和加密后的密文，以及公钥一并发送出来，接收方只需要通过公钥将密文解密后与授权明文对比是否一致，就可以判断明文在中途是否被篡改过。此方法用于数字签名。</li>
 </ul>
 <p><strong>RSA 算法原理</strong></p>
 <ol>
-<li><p>找出两个 “很大” 的质数：P &amp; Q，N = P * Q，M = (P-1) * (Q-1)</p>
-</li>
-<li><p>找出整数 E ，E 与 M 互质，即除了之外，没有公约数。</p>
-</li>
-<li><p>找出整数 D，使得 ED 除以 M 余1，即 (E * D) % M = 1 。</p>
-</li>
-<li><p>经过上述准备工作之后，可以得到：E 是公钥，负责加密 D 是私钥，负责解密 N 负责公钥和私钥之间的联系</p>
-</li>
-<li><p>加密算法，假定对 X 进行加密 (X ^ E) % N = Y</p>
-</li>
-<li><p>解密算法，根据费尔马小定义，可以使用以下公式完成解密 (Y ^ D) % N = X</p>
-</li>
+<li>找出两个 “很大” 的质数：P &amp; Q，N = P * Q，M = (P-1) * (Q-1)</li>
+<li>找出整数 E ，E 与 M 互质，即除了之外，没有公约数。</li>
+<li>找出整数 D，使得 ED 除以 M 余1，即 (E * D) % M = 1 。</li>
+<li>经过上述准备工作之后，可以得到：E 是公钥，负责加密 D 是私钥，负责解密 N 负责公钥和私钥之间的联系</li>
+<li>加密算法，假定对 X 进行加密 (X ^ E) % N = Y</li>
+<li>解密算法，根据费尔马小定义，可以使用以下公式完成解密 (Y ^ D) % N = X</li>
 </ol>
 <h1 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h1><p><strong>签名作用</strong><br>数字签名通过签名算法将消息签名得到密文，签名算法应该具有的特性：</p>
 <ul>
@@ -101,7 +84,7 @@
 <li><p><a href="%5Bhttps://developer.apple.com/library/content/documentation/Security/Conceptual/CodeSigningGuide/Introduction/Introduction.html%5D">苹果 Code Signing Guide 文档链接</a></p>
 </li>
 </ul>
-</div><div class="post-copyright"><script type="text/javascript" src="/js/copyright.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copyright.css"><p><span>本文标题：</span>iOS 中证书和签名机制</p><p><span>文章作者：</span>zerocc</p><p><span>发布时间：</span>2017年11月23日</p><p><span>原始链接：</span><a href="/20171123.html">http://www.zerocc.com.cn/20171123.html</a><span class="copy-path"><i class="fa fa-clipboard" data-clipboard-text="http://www.zerocc.com.cn/20171123.html"></i></span></p><p><span>版权声明：</span>本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！</p></div><br><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a class="article-share-link" data-url="http://www.zerocc.com.cn/20171123.html" data-id="ckfr1wg3a0003hexbfkhc4xof" data-qrcode="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3aQZLCMAwEwP3/p9kHpPCOLFubQ/tEQSBNDlOS7J+feH0e6/np88rnp9++dXjh4uK2uZ/lWiPWrG/vrH9t/WhwcXEnueug6V+TxF8Udri4uC/mVguUY2UQLi7ui7lJb5Jfg4uL+05u0vxUiXl4XenVcHFxG9y9AuXs6yvzXVxc3C3up7hOjVk3746LizvCzQOlurmyLlDy8gUXF/d/uXtRlTQ5Z4964OLiznCThqc/7qweuSijcXFxL3DXQdYfjFaD8o/HgYuLe5nb2UBNRh55EZM8Mlxc3HnuugTp7GvkR7sKiYuLi3uBu9cbJfTOd78GIi4u7gg3KTiqG6V5CG6WPri4uIPc5OeqI9HO2apCr4aLizvO7URVp/QpT3ZxcXFHuPk2anU7Ni99CkGGi4t7gVuIksaY48DxDlxc3EFudZO10zLtHQjDxcWd4fa3SNflSz7yiP4qLi7uCLcaLvm2yoFTIfEQFhcX9wY3D53qLTtBtlno4OLiHuXmlLzo6TRahfkuLi7u67n52DQpmK4HGS4u7iFuMhapDlsLI1RcXNxBbvnoZDw0yZucKNRwcXFHuNUoyW9ZaGnaV+Li4h7i/gJEpjPSpNQSCgAAAABJRU5ErkJggg==">分享</a><div class="tags"><a href="/tags/iOS/"><i class="fa fa-tag"></i>iOS</a><a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/"><i class="fa fa-tag"></i>密码学</a></div><div class="post-nav"><a class="pre" href="/20180101.html">归来仍是少年</a><a class="next" href="/20170420.html">漂洋过海来看你</a></div><div id="lv-container" data-id="city" data-uid="MTAyMC8zMTcyMy84Mjg3"><script>(function(d, s) {
+</div><div class="post-copyright"><script type="text/javascript" src="/js/copyright.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copyright.css"><p><span>本文标题：</span>iOS 中证书和签名机制</p><p><span>文章作者：</span>zerocc</p><p><span>发布时间：</span>2017年11月23日</p><p><span>原始链接：</span><a href="/20171123.html">http://www.zerocc.com.cn/20171123.html</a><span class="copy-path"><i class="fa fa-clipboard" data-clipboard-text="http://www.zerocc.com.cn/20171123.html"></i></span></p><p><span>版权声明：</span>本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！</p></div><br><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a class="article-share-link" data-url="http://www.zerocc.com.cn/20171123.html" data-id="ckfr228zh0003exxb4wi7hjh0" data-qrcode="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3aQZLCMAwEwP3/p9kHpPCOLFubQ/tEQSBNDlOS7J+feH0e6/np88rnp9++dXjh4uK2uZ/lWiPWrG/vrH9t/WhwcXEnueug6V+TxF8Udri4uC/mVguUY2UQLi7ui7lJb5Jfg4uL+05u0vxUiXl4XenVcHFxG9y9AuXs6yvzXVxc3C3up7hOjVk3746LizvCzQOlurmyLlDy8gUXF/d/uXtRlTQ5Z4964OLiznCThqc/7qweuSijcXFxL3DXQdYfjFaD8o/HgYuLe5nb2UBNRh55EZM8Mlxc3HnuugTp7GvkR7sKiYuLi3uBu9cbJfTOd78GIi4u7gg3KTiqG6V5CG6WPri4uIPc5OeqI9HO2apCr4aLizvO7URVp/QpT3ZxcXFHuPk2anU7Ni99CkGGi4t7gVuIksaY48DxDlxc3EFudZO10zLtHQjDxcWd4fa3SNflSz7yiP4qLi7uCLcaLvm2yoFTIfEQFhcX9wY3D53qLTtBtlno4OLiHuXmlLzo6TRahfkuLi7u67n52DQpmK4HGS4u7iFuMhapDlsLI1RcXNxBbvnoZDw0yZucKNRwcXFHuNUoyW9ZaGnaV+Li4h7i/gJEpjPSpNQSCgAAAABJRU5ErkJggg==">分享</a><div class="tags"><a href="/tags/iOS/"><i class="fa fa-tag"></i>iOS</a><a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/"><i class="fa fa-tag"></i>密码学</a></div><div class="post-nav"><a class="pre" href="/20180101.html">归来仍是少年</a><a class="next" href="/20170420.html">漂洋过海来看你</a></div><div id="lv-container" data-id="city" data-uid="MTAyMC8zMTcyMy84Mjg3"><script>(function(d, s) {
    var j, e = d.getElementsByTagName(s)[0];
    if (typeof LivereTower === 'function') { return; }
    j = d.createElement(s);
