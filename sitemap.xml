@@ -256,20 +256,6 @@
 
   
   <url>
-    <loc>http://www.zerocc.com.cn/tags/hexo/</loc>
-    <lastmod>2020-12-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.zerocc.com.cn/tags/objc/</loc>
-    <lastmod>2020-12-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://www.zerocc.com.cn/tags/iOS/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
@@ -278,6 +264,20 @@
   
   <url>
     <loc>http://www.zerocc.com.cn/tags/%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2020-12-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.zerocc.com.cn/tags/hexo/</loc>
+    <lastmod>2020-12-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.zerocc.com.cn/tags/objc/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -312,14 +312,7 @@
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/tags/%E9%9A%8F%E7%AC%94/</loc>
-    <lastmod>2020-12-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.zerocc.com.cn/tags/%E5%BF%83%E6%83%85/</loc>
+    <loc>http://www.zerocc.com.cn/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -333,7 +326,14 @@
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
+    <loc>http://www.zerocc.com.cn/tags/%E9%9A%8F%E7%AC%94/</loc>
+    <lastmod>2020-12-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.zerocc.com.cn/tags/%E5%BF%83%E6%83%85/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -377,14 +377,14 @@
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/categories/%E6%97%B6%E5%85%89%E6%B2%99%E6%BC%8F/</loc>
+    <loc>http://www.zerocc.com.cn/categories/%E6%9C%8D%E5%8A%A1%E7%AB%AF/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/categories/%E6%9C%8D%E5%8A%A1%E7%AB%AF/</loc>
+    <loc>http://www.zerocc.com.cn/categories/%E6%97%B6%E5%85%89%E6%B2%99%E6%BC%8F/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
