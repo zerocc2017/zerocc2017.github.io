@@ -184,14 +184,14 @@
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/20150807.html</loc>
+    <loc>http://www.zerocc.com.cn/20150806.html</loc>
     
     <lastmod>2016-05-01</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/20150806.html</loc>
+    <loc>http://www.zerocc.com.cn/20150807.html</loc>
     
     <lastmod>2016-05-01</lastmod>
     
@@ -233,6 +233,13 @@
   </url>
   
   <url>
+    <loc>http://www.zerocc.com.cn/1607332587.html</loc>
+    
+    <lastmod>2014-03-03</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zerocc.com.cn/20140303.html</loc>
     
     <lastmod>2014-03-03</lastmod>
@@ -249,6 +256,20 @@
 
   
   <url>
+    <loc>http://www.zerocc.com.cn/tags/hexo/</loc>
+    <lastmod>2020-12-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.zerocc.com.cn/tags/objc/</loc>
+    <lastmod>2020-12-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://www.zerocc.com.cn/tags/iOS/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
@@ -263,13 +284,6 @@
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/tags/hexo/</loc>
-    <lastmod>2020-12-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://www.zerocc.com.cn/tags/C/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
@@ -277,14 +291,21 @@
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/tags/%E7%BB%88%E7%AB%AF%E6%8C%87%E4%BB%A4/</loc>
+    <loc>http://www.zerocc.com.cn/tags/iOS-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
+    <loc>http://www.zerocc.com.cn/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/</loc>
+    <lastmod>2020-12-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.zerocc.com.cn/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -305,21 +326,14 @@
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/tags/iOS-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</loc>
+    <loc>http://www.zerocc.com.cn/tags/%E7%BB%88%E7%AB%AF%E6%8C%87%E4%BB%A4/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</loc>
-    <lastmod>2020-12-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.zerocc.com.cn/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/</loc>
+    <loc>http://www.zerocc.com.cn/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -349,14 +363,14 @@
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/categories/C/</loc>
+    <loc>http://www.zerocc.com.cn/categories/iOS/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/categories/%E6%9C%8D%E5%8A%A1%E7%AB%AF/</loc>
+    <loc>http://www.zerocc.com.cn/categories/C/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -370,7 +384,7 @@
   </url>
   
   <url>
-    <loc>http://www.zerocc.com.cn/categories/iOS/</loc>
+    <loc>http://www.zerocc.com.cn/categories/%E6%9C%8D%E5%8A%A1%E7%AB%AF/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
